@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>记账记录</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>记账记录</h1>
+            <div class="accounts">
+                <%  accounts.forEach(item => { %>
+                    <div class="panel_panel-danger">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><%= item.type %>：<%= item.money %></h3>
+                        </div>
+                        <div class="text-center">
+                            <span class="label-warning">
+                                
+                            </span>
+                            
+                        </div>
+                        <div class="panel-heading">
+                            <h3 class="panel-title">总支出：<%= item.accounts %> 元</h3>
+                        </div>
+                    </div>
+                    
+                <% }) %>
+
+                <div class="panel_panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">总收入：<%= totalIncome %></h3>
+                    </div>
+                </div>
+                
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>收入/支出</th>
+                        <th>金额</th>
+                        <th>备注</th>
+                        <th>时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% records.forEach(function(record) { %>
+                        <tr>
+                            <td><%= record.id %></td>
+                            <td><%= record.type %></td>
+                            <td><%= record.money %></td>
+                            <td><%= record.remark %></td>
+                            <td><%= record.time %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

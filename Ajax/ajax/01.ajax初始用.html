@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax1</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <p class="my-p"></p>
+            <!-- 1.引入axios的js文件 -->
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <script>
+                // 2.使用axios函数
+                axios({
+                    // 外部的url,目标资源的地址
+                    url:'http://hmajax.itheima.net/api/province',
+                }).then( res =>{
+                    // 习惯：多打印,处理属性名;对服务器返回内容进行处理
+                    
+                    console.log(res);
+                    console.log(res.data.list);
+                    // 3.获取到数据后,进行页面的渲染
+                    // 3.1 获取到目标元素
+                    let p = document.querySelector('.my-p');
+                    // 使用 <br> 进行字符串的拼接
+                    p.innerHTML = res.data.list.join('<br>');
+                    
+                })
+            </script>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      ajax:
+        specifier: ^0.0.4
+        version: 0.0.4
+
+packages:
+
+  ajax@0.0.4:
+    resolution: {integrity: sha512-IEgdnz67DKuv2i8AnytAYtD+sGNTpSlXcwQsZbKWVqdC/O7cuXN0GfwCuhi19fyhpD0Gl22T5amxd2unqj0FAQ==}
+    engines: {node: '>=0.4.0'}
+
+  underscore@1.13.7:
+    resolution: {integrity: sha512-GMXzWtsc57XAtguZgaQViUOzs0KTkk8ojr3/xAxXLITqf/3EMwxC0inyETfDFjH/Krbhuep0HNbbjI9i/q3F3g==}
+
+snapshots:
+
+  ajax@0.0.4:
+    dependencies:
+      underscore: 1.13.7
+
+  underscore@1.13.7: {}

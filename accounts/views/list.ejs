@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- 字符编码设置为 UTF-8 -->
     <meta charset="UTF-8">
+    <!-- 视口设置，用于响应式布局 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>记账记录</title>
+    <!-- 引入bookstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
     <style>
+        /* 页面主体的样式，使用 Flex 布局将内容居中 */
         body {
             display: flex;
             justify-content: center;
@@ -14,21 +22,23 @@
             margin: 0;
         }
 
+        /* 表格的样式，边框合并，宽度为 80% */
         table {
             border-collapse: collapse;
             width: 80%;
         }
 
+        /* 表格表头和单元格的样式，设置边框、内边距和文本对齐方式 */
         th, td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
 
+        /* 表头的背景颜色 */
         th {
             background-color: #f2f2f2;
         }
-
     </style>
 </head>
 <body>
@@ -36,51 +46,50 @@
         <div class="row">
             <h1>记账记录</h1>
             <hr>
-             </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>收入/支出</th>
-                            <th>金额</th>
-                            <th>备注</th>
-                            <th>时间</th>
-                        </tr>
-                    </thead>
-                    
-                </table>
-            </div> 
-            <div class="accounts">
-                <%  accounts.forEach( item => { %>
-                    <div class="panel_panel-danger">
-                        <div class="panel-heading"><%= item.time %></div>
-                         <div class="panel-body"> 
-                            <p> <%= item.title %> </p>
-                            <div class="text-center">
-                               <span class="label-warning">
-                                    <%= item.type === '1' ?'收入':'支出'%>
-                                </span>
-                            </div>
-                            <div class="text-right">
-                                <span class="label-success">
-                                     <%= item.amount %>元
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                <% }) %>
-                <div class="text-right">
-                    <a href="/accounts/<%= item.id %>">
-                        <span class="gly-remove"
-                            aria-hidden="true" <! -- 图标 -->
-                        >
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>收入/支出</th>
+                    <th>金额</th>
+                    <th>备注</th>
+                    <th>时间</th>
+                </tr>
+            </thead>
+        </table>
+    </div> 
+    <div class="accounts">
+        <!-- 使用 EJS 模板引擎遍历 accounts 数组 -->
+        <%  accounts.forEach( item => { %>
+            <div class="panel_panel-danger">
+                <div class="panel-heading"><%= item.time %></div>
+                <div class="panel-body"> 
+                    <p> <%= item.title %> </p>
+                    <div class="text-center">
+                        <span class="label-warning">
+                            <!-- 根据 item.type 的值显示收入或支出 -->
+                            <%= item.type === '1'?'收入':'支出'%>
                         </span>
-                    </a>
+                    </div>
+                    <div class="text-right">
+                        <span class="label-success">
+                            <!-- 显示金额 -->
+                            <%= item.amount %>元
+                        </span>
+                    </div>
                 </div>
             </div>
+        <% }) %>
+        <div class="text-right">
+            <a href="/accounts/<%= item.id %>">
+                <span class="gly-remove"
+                    aria-hidden="true"
+                >
+                </span>
+            </a>
         </div>
-   
     </div>
+</div>
 </body>
 </html>

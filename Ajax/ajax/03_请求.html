@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+/*使用 .catch()函数 进行捕获error 弹框到页面展示 */
+        document.querySelector('.btn').addEventListener('click',() => {
+            axios({
+                url:'',
+                method:'post',
+                data:{
+                    username,
+                    password
+                }
+            }).then(res => {
+                console.log(res);
+            }).catch( err =>{
+                let message = err.response.data.message;
+                alert(message);
+            })
+
+        })
+   
+    </script>
+</body>
+</html>

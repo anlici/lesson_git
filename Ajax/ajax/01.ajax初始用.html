@@ -15,7 +15,11 @@
                 // 2.使用axios函数
                 axios({
                     // 外部的url,目标资源的地址
-                    url:'http://hmajax.itheima.net/api/province',
+                    url:'http://hmajax.itheima.net/api/area',
+                    // 参数
+                    params:{
+                        pname:'河北省'
+                    }
                 }).then( res =>{
                     // 习惯：多打印,处理属性名;对服务器返回内容进行处理
                     
@@ -26,6 +30,7 @@
                     let p = document.querySelector('.my-p');
                     // 使用 <br> 进行字符串的拼接
                     p.innerHTML = res.data.list.join('<br>');
+                    
                     
                 })
             </script>

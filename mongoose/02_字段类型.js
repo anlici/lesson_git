@@ -9,12 +9,19 @@ mongoose.connect('mongodb://127.0.0.1:27017/atgugu');
 mongoose.connection.once('open',() => {
    // 创建文档结果对象
    let BookSchema = new mongoose.Schema({
-      name: String,
-      author: String,
-      price:Number,
-      text:mongoose.Schema.Types.ObjectId,// 外键  关联集合
-      time:Date,
-      isHot:Boolean
+      name: {
+         type:String,
+         required:true,
+         unique:true, //唯一值,需要新的集合不能产生重复
+      },
+      author: {
+         type:String,
+         default:'曹雪芹', //没传入，按这个默认值
+      },
+      isHot:{
+         type:Boolean,
+         enum:[true,false],// 枚举值 只能是true和false
+      }
 
    });
    // 4.创建模型对象  集合名称  文档结果对象
@@ -23,18 +30,14 @@ mongoose.connection.once('open',() => {
    BookModel.create({
       name: '红楼梦',
       author: '曹雪芹',
-      price: 100,
       isHot: true,//写错ishotss，忽视
-      time: new Date(),
-      text: '5f051540646523001413424a' 
    },(err,data) => {
       if(err){
          console.log(err);
          return;
       }
       console.log(data);
-      // 6.关闭数据库,运行时候不会设置关闭
-     //  mongoose.disconnect();
+
 
    })
 })

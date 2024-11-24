@@ -9,32 +9,46 @@ mongoose.connect('mongodb://127.0.0.1:27017/atgugu');
 mongoose.connection.once('open',() => {
    // 创建文档结果对象
    let BookSchema = new mongoose.Schema({
-      name: String,
-      author: String,
-      price:Number,
-      text:mongoose.Schema.Types.ObjectId,// 外键  关联集合
-      time:Date,
-      isHot:Boolean
+      name: {
+         type:String,
+         required:true,
+         unique:true, //唯一值,需要新的集合不能产生重复
+      },
+
 
    });
    // 4.创建模型对象  集合名称  文档结果对象
    let BookModel = mongoose.model('books',BookSchema);
-   // 5.新增
-   BookModel.create({
-      name: '红楼梦',
-      author: '曹雪芹',
-      price: 100,
-      isHot: true,//写错ishotss，忽视
-      time: new Date(),
-      text: '5f051540646523001413424a' 
+   // 7.删除一个
+   BookModel.deleteOne({
+      name:'红楼梦'
    },(err,data) => {
       if(err){
          console.log(err);
          return;
       }
       console.log(data);
-      // 6.关闭数据库,运行时候不会设置关闭
-     //  mongoose.disconnect();
+   })
+   // // 批量删除
+   // BookModel.deleteMany({
+   //    name:'红楼梦'
+   // },(err,data) => {
+   //    if(err){
+   //       console.log(err);
+   //       return;
+   //    }
+   //    console.log(data);
+   // })
+   // 5.新增
+   BookModel.create({
+      name: '红楼梦',
+   },(err,data) => {
+      if(err){
+         console.log(err);
+         return;
+      }
+      console.log(data);
+
 
    })
 })

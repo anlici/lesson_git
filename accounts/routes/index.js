@@ -40,7 +40,7 @@ router.post('/account',function(req,res) {
   // 生成id 
   let id = shortid.generate();
   // 向数据库中添加数据 ，...扩展展开
-  db.get('accounts').push({id:id,...req.body}).write();
+  db.get('accounts').unshift({id:id,...req.body}).write();
   // 成功提醒
   res.render('success',{msg:'添加成功~~~~~',url:'/account'});
   //res.render('create');

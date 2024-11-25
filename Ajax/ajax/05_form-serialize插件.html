@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form-serialize插件</title>
+</head>
+<body>
+    <!-- action 属性指定了表单提交时要执行的操作 -->
+    <!-- javascript: ; 是一个伪协议，这里使用它表示当表单提交时，
+    不会执行任何实际的页面跳转或服务器请求，而是执行一个空的 JavaScript 语句 -->
+    <!-- <form action="javascript: ;" class="example-form"> -->
+        <!-- 另一种onsubmit方法 -->
+       <form onsubmit="return false;" class="example-form"> 
+        <!-- username：对象键名1 -->
+        <input type="text" name = "username">
+        <br>
+        <input type="text" name = "password">
+        <br>
+        <input type="button" class="btn" value="提交">
+    </form>
+
+    <!--  1.把lib文件里面form-serialize 插件引入到页面-->
+      <script src="/Ajax/lib/form-serialize.js"></script>
+      <script>
+        // 找.btn类名按钮，添加点击事件
+           document.querySelector('.btn').addEventListener('click', () => {
+            // 找example-form表单
+              const form = document.querySelector('.example-form');
+              // 调用form-serialize插件,把表单数据序列化为对象
+              /* hash 设置获取对象
+                 - true: js对象(推荐)，请求体要求js对象，提交给服务器
+                 - false: 查询字符串
+               * empty true 返回空对象，不包含空值的键值对
+               * */
+                   
+              const data = serialize(form,{hash:true,empty:true});
+              console.log(data);
+          })
+      </script>
+</body>
+</html>

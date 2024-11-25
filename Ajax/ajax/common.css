@@ -1,0 +1,38 @@
+html,
+    body {
+      background-color: #EDF0F5;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 520px;
+      height: 540px;
+      background-color: #fff;
+      padding: 60px;
+      box-sizing: border-box;
+    }
+
+    .container h3 {
+      font-weight: 900;
+    }
+    /* 提示框内容 */
+    .alert {
+        transition: .5s;
+        opacity: 0;
+    }
+    .alert.show {
+        opacity:1;
+    }
+
+    /* 表单内容 */
+
+    .form_warp {
+        color: #8B929D !important;
+    }
+    .form_text {
+        color: #8B929D!important;
+    }

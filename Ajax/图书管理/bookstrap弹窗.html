@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>弹窗标签</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- 
+       目的：使用js控制弹窗标签的显示和隐藏
+       1.创建弹框对象
+       2.弹窗内置方法：
+           show() 显示弹框
+           hide() 隐藏弹框
+           toggle() 切换弹框
+      -->
+    <!-- 弹窗标签
+         bookstrap的model弹框:添加model类名（默认隐藏）-->
+    <button type="button" class="btn btn-primary edit-btn">点击显示弹框</button>
+    <div class="modal name-box" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">请输入姓名</h5>
+              <button type="button" class="btn-close" 
+              data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="">
+                <span>姓名：</span>
+                <input type="text" class="username">
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" 
+                 data-bs-dismiss="modal">取消</button>
+              <button type="button" class="btn btn-primary save-btn">保存</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 引入bookstrap.js -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js">
+      </script>
+
+      <script>
+        // 1.创建弹框对象
+        const myBox = document.querySelector('.name-box');
+        const modal = new bookstrap.Modal(myBox);
+
+        //编辑姓名->默认姓名->点击->show显示弹框
+        document.querySeletor('.edit-btn').addEventListener
+        ('click',() => {
+            // 默认姓名
+            document.querySeletor('.username').value = '张三';
+            modal.show();
+        })
+
+        //保存->点击->获取姓名打印->hide隐藏弹框
+        document.querySeletor('.save-btn').addEventListener
+        ('click',() => {
+            // 获取姓名
+            const username = document.querySeletor('.username').value;
+            console.log(username);
+            modal.hide();
+        })
+      </script>
+
+</body>
+</html>

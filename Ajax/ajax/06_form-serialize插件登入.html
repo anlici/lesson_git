@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入使用插件</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./common.css">
+</head>
+<body>
+    <div class="container">
+        <h1>欢迎-登入</h1>
+        <!-- 提示信息 -->
+         <!-- role 当前元素发生变化，无论用户焦点是否在该元素，
+          都会被屏幕阅读器等辅助技术自动读出，呈现错误、确认、警告等消息-->
+         <div class="alert alert-success" role="alert">登入成功</div>
+        <!-- 表单 -->
+         <div class="form_wrap">
+             <form class="login-form">
+                <div class="mp-3">
+                    <label for="username" class="form-label" >用户名</label>
+                    <input class="form-control" type="text" 
+                    name="username" placeholder="请输入用户名" />
+                </div>
+                <div class="mp-3">
+                    <!-- name和接口文档一样 -->
+                    <label for="password" class="form-label" >密码</label>
+                    <input class="form-control" type="text" 
+                    name="passward" placeholder="请输入密码" />
+                </div>
+                <button type="button" class="btn btn-primary btn-login">登入</button>
+             </form>
+         </div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- 插件引入到页面-- -->
+<script src="/Ajax/lib/form-serialize.js"></script>
+    <script>
+        // 登入使用插件
+        const myAlert=document.querySelector('.alert');
+        
+        // 提示词判定
+        // msg:消息文本；一个bool参数
+        function alertFn(msg,isSuccess) {
+            myAlert.classList.add('show');
+            // 设置myAlert 内容为msg
+            myAlert.innerHTML = msg;
+            const bgStyle = isSuccess ? 'alert-success' : 'alert-danger';
+            myAlert.classList.add(bgStyle);// 样式添加
+
+            // 2s后 show
+            setTimeout(() => {
+                myAlert.classList.remove('show');
+                // 提示背景色重置，避免类名冲突
+                myAlert.classList.remove(bgStyle);
+            },2000);
+        }
+  
+        // 登入点击事件，登入消息判断，axios ？
+        document.querySelector('.btn-login').addEventListener('click',() => {
+            // 使用serialize 函数，收集
+            const form = document.querySelector('.login-form');
+            const data = serialize(form,{hash:true,empty:true});
+// 结构赋值，当属性和变量名同名简写
+            const {username,password} = data;
+
+            // axios 提交用户名和密码
+            axios({
+                url:'http://hmajax.itheima.net/api/register',
+               methord:'POST',
+               data:{
+                  username,
+                  password
+               }
+
+            }).then( result =>{
+                 alertFn(result.data.message,true );
+                console.log(result);
+                console.log(result.data);
+               
+            }).catch( error => {
+                alertFn(error.response.data.message,false);
+                console.log(error);
+                console.log(error.response.data.message);
+            })
+        })
+    </script>
+    
+</body>
+</html>

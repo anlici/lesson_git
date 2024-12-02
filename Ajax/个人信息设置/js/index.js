@@ -35,3 +35,61 @@ axios({
         }
     })
 })  
+
+/** 目标2：修改头像信息
+ *   2.1 获取头像信息
+ *   2.2 提交服务器并且更新回显到页面
+ * 
+ * */ 
+document.querySelector('.upload').addEventListener('change', e => {
+    // 获取头像文件
+    const avatarFile = e.target.files[0];
+    console.log(avatarFile);
+    // 创建formData对象
+    const formData = new FormData();
+    // 添加头像文件
+    formData.append('avatar', avatarFile);
+    formData.append('creator', creator);
+    // 提交服务器
+    axios({
+        url: 'http://hmajax.itheima.net/api/avatar',
+        method: 'PUT',
+        data: formData
+    }).then( res => {
+        // 更新回显到页面
+        const imgUrl = res.data.data.avatar;
+        document.querySelector('.prew').src = imgUrl;
+    })
+})
+
+/**
+ * 目标3：修改其他信息 + 提示框
+ *  3.1收集表单数据
+ *  3.2 提交服务器
+ *  3.3 更新回显到页面
+ * 点击 click
+ *  3.4 提示框 toast
+ *  
+ */
+document.querySelector('.submit').addEventListener('click', () => {
+    // 在表单里面，属性名和id一样
+    const userForm = document.querySelector('.user-form');
+    // 收集表单数据
+    const userObj = serialize(userForm,{hash:true,empty:true});
+    console.log(userObj);
+    // 新增creator
+    userObj.creator = creator;
+    // 性别，后端要求int,转换成数字
+    userObj.gender = +userObj.gender;
+    // 提交服务器
+    axios({
+        url: 'http://hmajax.itheima.net/api/settings',
+        method: 'PUT',
+        data: userObj // axios自动对象转成json
+    }).then( res => {
+        // toast提示框
+        const toastDom = document.querySelector('.my-toast');
+        const toast = new bootstrap.Toast(toastDom);
+        toast.show();
+    })
+})

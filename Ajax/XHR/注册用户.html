@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册用户</title>
+</head>
+<body>
+    <button class="reg-btn">注册用户</button>
+    <script>
+        // 使用xhr完成注册
+        document.querySelector('.reg-btn').addEventListener('click',() => {
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('POST','http://hmajax.itheima.net/api/register')
+            xhr.addEventListener('loadend',() => {
+                console.log(xhr.response);
+            })
+            // 发送请求，设置响应头
+            xhr.setRequestHeader('Content-Type','application/json');
+            const userObj = {
+                username: 'admin12312',
+                password: '123456'
+            }
+            // 将js对象转换为字符串
+            const userStr = JSON.stringify(userObj);
+            xhr.send(userStr)
+        })
+    </script>
+</body>
+</html>

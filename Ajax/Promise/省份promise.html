@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>省份异步</title>
+</head>
+<body>
+    <p class="my-p"></p>
+    <script>
+        const p = new Promise((reslove,reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open('get','http://hmajax.itheima.net/api/province');
+            xhr.addEventListener('loadend',()=> {
+                if(xhr.status >= 200 && xhr.status < 300) {
+                    reslove(JSON.parse(xhr.response))
+                }else {
+                   //  reject(xhr.statusText)
+                    reject(new Error(xhr.response));
+                    //reject(new Error(xhr.statusText))
+                }
+            })
+            xhr.send();
+        })
+        p.then(res => {
+            document.querySelector('.my-p').innerHTML = res.list.join('<br>')
+        }).catch(err => {
+            // 详细打印err
+            console.dir(err);
+            document.querySelector('.my-p').innerHTML = err.message;
+        })
+    </script>
+</body>
+</html>

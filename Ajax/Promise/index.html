@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>promise</title>
+</head>
+<body>
+    <script>
+        const p = new Promise((resolve,reject) => {
+            // 异步操作 pending 待定
+            setTimeout(() => {
+                // fulfilled 已兑现
+               // resolve('成功')
+               reject('失败') // rejected 已拒绝
+            },1000)
+        })
+        
+        p.then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        })
+    </script>
+</body>
+</html>

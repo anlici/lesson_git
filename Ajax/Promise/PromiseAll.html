@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromiseAll</title>
+</head>
+<body>
+    <p class="my-p"></p>
+    <script src="http://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        <!-- 同时展示数据-->
+       const bjPromise = axios({url:'http://hmajax.itheima.net/api/weather',params:{city:'110100'}})
+       const shPromise = axios({url:'http://hmajax.itheima.net/api/weather',params:{city:'310100'}})
+       Promise.all([bjPromise,shPromise]).then(result => {
+           console.log(result);
+           // 按li进行拼接
+        const objString = result.map(item => `<li>${item.data.data.area} ${item.data.data.weather}</li>`).join('')
+          
+           document.querySelector('.my-p').innerHTML = objString
+       }).catch(err => {
+           console.dir(err);
+       })
+
+    </script>
+    
+</body>
+</html>

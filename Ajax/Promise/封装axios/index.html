@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>封装简单axios函数</title>
+</head>
+<body>
+    <p class="my-p"></p>
+    <script>
+        /**
+         *   封装一个简单的axios函数
+         * 1.定义myAxios函数，接收配置对象config，返回一个promise对象
+         * 2.发起xhr请求。默认请求get
+         * 3.判断请求状态码
+         * 4.使用myAxios函数，获取地区数据
+         * 
+         * 目标：增加查询参数
+         * 1.判断params 是否携带查询参数 url?...
+         * 2.URLSearchParams转换，并且携带到url上
+         * 
+         * */
+        function myAxios(config) {
+            return new Promise((reslove,reject) => {
+                const xhr = new XMLHttpRequest();
+                if(config.params) {
+                    // 携带params 查询到url上
+                    const paramsObj = new URLSearchParams(config.params);
+                    const queryString = paramsObj.toString();
+                    // 拼接
+                    config.url += `?${queryString}`;
+                }
+                xhr.open(config.method || 'get',config.url);
+                xhr.addEventListener('loadend',() => {
+                    if(xhr.status >= 200 && xhr.status <300) {
+                        reslove(JSON.parse(xhr.response));
+                    } else {
+                        reject(new Error(xhr.response));
+                    }
+                })
+                xhr.send()
+            })
+        }
+        // 使用myAxios
+        myAxios({
+            url:'http://hmajax.itheima.net/api/area',
+            params:{
+                pname:'江西省',
+                cname:'南昌市'
+            }
+        }).then(result=> {
+            document.querySelector('.my-p').innerHTML = result.list.join('<br>')
+        }).catch(error => {
+            document.querySelector('.my-p').innerHTML = error.message;
+        })
+        
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面题</title>
+</head>
+<body>
+    <script>
+        console.log(2);
+        setTimeout(() => {
+            console.log(1);
+            const p = new Promise(resolve => {
+                console.log(7);
+                resolve(8);
+             })
+             p.then(res => console.log(res) )
+        }, 0);
+        const p = new Promise((resolve,reject) => {
+            setTimeout(() => {
+                console.log(3);
+            }, 0);
+            resolve(4);
+        })
+        p.then (res => console.log(res))
+        const p2 = new Promise( resolve => resolve(5) )
+        p2.then(res => console.log(res))
+        console.log(7);
+    </script>
+</body>
+</html>

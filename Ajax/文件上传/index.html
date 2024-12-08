@@ -18,7 +18,7 @@
         */
         document.querySelector('.upload').addEventListener('change' , e => {
             // 1.获取图片
-             console.log(e.target.files[0]);
+            // console.log(e.target.files[0]);
              // 2.使用FormData 携带图片文件,后端要form-data 参数
 
              // 键值对fd ，表单对象fd~~提交到服务器，服务器返回内容,网络载荷里面
@@ -34,7 +34,6 @@
                 const imgUrl = result.data.data.url
                 // 给src 赋值 服务器的url网址
                 document.querySelector('.my-img').src = imgUrl
-                
              })
              
             

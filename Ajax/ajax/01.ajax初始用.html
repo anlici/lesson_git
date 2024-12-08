@@ -18,11 +18,11 @@
                     url:'http://hmajax.itheima.net/api/area',
                     // 参数
                     params:{
-                        pname:'河北省'
+                        pname:'江西省',
+                        cname:'南昌市'
                     }
                 }).then( res =>{
                     // 习惯：多打印,处理属性名;对服务器返回内容进行处理
-                    
                     console.log(res);
                     console.log(res.data.list);
                     // 3.获取到数据后,进行页面的渲染
@@ -30,8 +30,6 @@
                     let p = document.querySelector('.my-p');
                     // 使用 <br> 进行字符串的拼接
                     p.innerHTML = res.data.list.join('<br>');
-                    
-                    
                 })
             </script>
         </div>

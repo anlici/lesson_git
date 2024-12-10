@@ -11,7 +11,7 @@
         setTimeout(() => {
             console.log(1);
             const p = new Promise(resolve => {
-                console.log(7);
+                console.log(9);
                 resolve(8);
              })
              p.then(res => console.log(res) )
@@ -20,12 +20,45 @@
             setTimeout(() => {
                 console.log(3);
             }, 0);
-            resolve(4);
+            resolve(4);//打印成功 4
         })
-        p.then (res => console.log(res))
+       
         const p2 = new Promise( resolve => resolve(5) )
-        p2.then(res => console.log(res))
+        p2.then(res => console.log(res)) 
+
+        p.then (res => console.log(res))
+
         console.log(7);
+        
     </script>
+    // 2 7 5 4 1 9 8 3
+    <script>
+        console.log(0);
+        setTimeout(() => {
+            console.log(9);
+        },1);
+        // promise 
+            // const p = new Promise(resolve => {
+            //     console.log(9);
+            //     resolve(8);
+            //  })
+            //  p.then(res => console.log(res) ); 
+            //  console.log(1);
+            //  // 9 1 8
+    </script>
+    <script>
+         async function fn1() {
+             await fn2(); // await后面代码才是微任务
+             console.log(1);
+         }
+         async function fn2() {
+             console.log(2);
+         }
+         fn1();
+        console.log(3);  
+        // 2 3 1
+    </script>
+    // 0 2 3 1 9
+
 </body>
 </html>

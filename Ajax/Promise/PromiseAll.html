@@ -14,14 +14,13 @@
        const shPromise = axios({url:'http://hmajax.itheima.net/api/weather',params:{city:'310100'}})
        Promise.all([bjPromise,shPromise]).then(result => {
            console.log(result);
-           // 按li进行拼接
+           // 按li进行拼接,把地区和天气拼接
         const objString = result.map(item => `<li>${item.data.data.area} ${item.data.data.weather}</li>`).join('')
           
            document.querySelector('.my-p').innerHTML = objString
        }).catch(err => {
            console.dir(err);
        })
-
     </script>
     
 </body>

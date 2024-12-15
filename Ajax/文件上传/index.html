@@ -8,6 +8,7 @@
 <body>
     <input type="file" class="upload">
     <img src="" alt="" class="my-img">
+    <!-- -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         /*
@@ -21,9 +22,9 @@
             // console.log(e.target.files[0]);
              // 2.使用FormData 携带图片文件,后端要form-data 参数
 
-             // 键值对fd ，表单对象fd~~提交到服务器，服务器返回内容,网络载荷里面
-             const fd = new FormData()
-             fd.append('img',e.target.files[0])
+             // 键值对fd ，表单对象fd~~提交到服务器，服务器返回内容,网络载荷里面看
+             const fd = new FormData();
+             fd.append('img',e.target.files[0]);
              axios({
                 url: 'http://hmajax.itheima.net/api/uploadimg',
                 method : 'POST',
@@ -31,12 +32,10 @@
              }).then( result => {
                 console.log(result.data);
                 // 取出 img 网址，并且使用服务器返回的url网址 显示到网页
-                const imgUrl = result.data.data.url
+                const imgUrl = result.data.data.url;
                 // 给src 赋值 服务器的url网址
-                document.querySelector('.my-img').src = imgUrl
+                document.querySelector('.my-img').src = imgUrl;
              })
-             
-            
         })
     </script>
 

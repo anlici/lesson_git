@@ -46,7 +46,7 @@
           pname: 省份或直辖市名字
           cname: 城市名字
       */
-     // 
+    
      document.querySelector('.sel-btn').addEventListener('click',() => {
         // 省份和城市名字
         const pname = document.querySelector('.province').value;
@@ -57,7 +57,7 @@
           pname,
           cname
         }
-        // 浏览器内置searchParams对象
+        // 浏览器内置searchParams对象，参数对象转换为参数字符串
         const paramsObj = new URLSearchParams(qObj);
         const queryString = paramsObj.toString();
 
@@ -70,8 +70,9 @@
             const data =JSON.parse(xhr.response);
             // 映射，拼接成字符串
             const htmlStr = data.list.map(item => {
-              return `<li class="list-group-item">${item}</li>`
+              return `<li class="list-group-item">${item}<li>`
             }).join('');
+           
             document.querySelector('.list-group').innerHTML = htmlStr;
             
         })

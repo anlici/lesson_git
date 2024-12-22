@@ -1,16 +1,23 @@
-import React  from "react";
-import ReactDom from ' react-dom/client'; // 导入react-dom/client模块，为了使用createRoot方法
-
-const root = ReactDom.createRoot(document.getElementById('root'));
-
-let text = 'Day1 react'
-root.render(
-    <div>
-        <p></p>
-        <p></p>
-        <p></p>
-        <h1>{text}</h1>
-    </div>
-   
-)
-
+export default function createElement(ele,props,...children) {
+    let virtualDOM = {
+        $$typeof: Symbol.for('react.element'),
+        key: null,
+        ref: null,
+        type: null,
+        props: {}
+    };
+    let len = children.length;
+    virtualDOM.type = ele;
+    if(props != null ) {
+        virtualDOM.props = {
+            ...props
+        };
+    }
+    // 
+    if(len === 1) {
+        virtualDOM.props.children = children[0];
+    }else if(len > 1) {
+        virtualDOM.props.children = children;
+    }
+    return virtualDOM;
+};

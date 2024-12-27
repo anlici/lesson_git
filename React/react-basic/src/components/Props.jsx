@@ -31,6 +31,11 @@
  * 2.子组件传递函数给父组件
  * 3.父组件调用函数
  */
+/**
+ * 兄弟组件通信
+ * son1 传给父，父传给son2
+ * 状态提升
+ */
 import React,{useState} from 'react';
 function Props() {
     // props 只读，子组件不能去修改；
@@ -46,13 +51,14 @@ function Props() {
             <h2>父组件：{msg}</h2>
          </div>
          <div>
-            <Son name="李四" age={20} getMsg={getMsg}></Son>
+            <Son1 name="李四" age={20} getMsg={getMsg}></Son1>
+            <Son2 msg={msg}></Son2>
          </div>
         </>
     )
 }
-function Son(props) {
-    const sonMsg = '我是子组件'
+function Son1(props) {
+    const sonMsg = '我是son1子组件'
     return (
         // <div>
         //     <h2>姓名：{props.name}</h2>
@@ -64,6 +70,13 @@ function Son(props) {
         </>
     )
 }
-
+function Son2(props) {
+    return (
+        <>
+          <h2>我是son2子组件</h2>
+          <h2>内容：{props.msg}</h2>
+        </>
+    )
+}
 export default Props;
-export {Son}
+export {Son1,Son2}

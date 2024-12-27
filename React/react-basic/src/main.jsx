@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
  import textJsx from './components/text.jsx'
 import Props from './components/Props.jsx'
+import Context from './components/Context.jsx'
+
+import Effect from './components/effect.jsx'
 let x = 10
 let y = 20
 
@@ -10,7 +13,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <>
     {/* <App />
     <textJsx /> */}
-    <Props />
+    {/* <Props /> */}
+    {/* <Context /> */}
+    <Effect />
     </>
     
     // <>

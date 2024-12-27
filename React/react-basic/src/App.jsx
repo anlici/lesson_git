@@ -37,31 +37,31 @@ function App() {
               setCount(count + 1)
         }}>按钮{count}</button> 
         <br />
-        <h2 style={styObj}>12.22早安,舒服！！</h2>
+        <h2 style={styObj}>12.24早八,舒服！！</h2>
         {React.createElement('button',null,'按钮')}
       </>
     )
     
 }
-console.log(
-  createElement(
-    React.Fragment,
-    null,
-    createElement(
-      "button",
-      {
-        type: "button",
-        style: {
-          display: "block"
-        }
-      },
-      "按钮"
-    ),
-    createElement(
-       "h2",
-       {style: styObj},
-       "12.22早安,舒服！！"
-    )
-  )
-);
+// console.log(
+//   createElement(
+//     React.Fragment,
+//     null,
+//     createElement(
+//       "button",
+//       {
+//         type: "button",
+//         style: {
+//           display: "block"
+//         }
+//       },
+//       "按钮"
+//     ),
+//     createElement(
+//        "h2",
+//        {style: styObj},
+//        "12.22早安,舒服！！"
+//     )
+//   )
+// );
 export default App

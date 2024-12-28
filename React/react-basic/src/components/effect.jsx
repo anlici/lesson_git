@@ -100,7 +100,23 @@ function App() {
       </>
     )
 }
-
+// 封装请求数据hook
+function useGetList(URL) {
+   const [commentList,setCommentList] = useState([])
+   useEffect(() => {
+     async function getData() 
+     {
+       const res = await fetch(URL)
+       const jsonRes = await res.json()
+       console.log(jsonRes);
+       setCommentList(jsonRes.data.channels)
+     }
+     getData()
+   },[])
+   return {
+     commentList
+   }
+}
 /**
  * 自定义hook
  * 复用逻辑
@@ -111,6 +127,9 @@ function App() {
  * 1.只能在组件中，或者自定义hook中使用
  * 2，不能在循环for，条件判断if中使用，只在顶层调用
  */
-
+/**
+ * app 智能组件
+ * item ui组件
+ */
 
 export default App;

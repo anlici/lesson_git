@@ -1,4 +1,26 @@
-import { useEffect,useState } from "react";
+import React, { useState, useEffect } from 'react';
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log('Count inside useEffect:', count);
+  });
+
+  useEffect(() => {
+    console.log('Count inside second useEffect:', count);
+  }, [count]);
+
+  return (
+    <div>
+      <h2>当前计数: {count}</h2>
+      <button onClick={() => setCount(count + 1)}>增加计数</button>
+    </div>
+  );
+}
+
+
+
 
 // useEffect 钩子函数,react hook函数，本身不是事件引起，而是渲染本身引起
 // 一般有：发送请求，获取数据，设置订阅，手动更改 React 组件中的 DOM
@@ -87,19 +109,28 @@ function Son() {
    )
 }
 
-function App() {
-    const {show,setShow} = useShow()
-    useEffect(() => {
-      console.log('定时器执行了')
-    },[show])
+// function App() {
+//   const [count, setCount] = useState(0);
 
-    return (
-      <>
-        {show && <Son />} 
-        <button onClick={() => setShow(!show)}>显示/隐藏</button>
-      </>
-    )
-}
+//   useEffect(() => {
+//     const handle = () => {
+//       console.log(`当前计数值: ${count}`);
+//     };
+
+//     window.addEventListener('resize', handle);
+
+//     // 清除事件监听器
+//     return () => {
+//       window.removeEventListener('resize', handle);
+//     };
+//   }, [count]);  // 在这里将 count 添加为依赖项，确保每次 count 更新时重新绑定事件
+
+//   return (
+//     <>
+//       <button onClick={() => setCount(count + 1)}>增加计数</button>
+//     </>
+//   );
+// }
 // 封装请求数据hook
 function useGetList(URL) {
    const [commentList,setCommentList] = useState([])

@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { useSelector,useDispatch} from "react-redux";
+import {useSelector,useDispatch} from "react-redux";
 import {add,sub,addNum } from "./store/modules/counterStore";
 import {fetchChannelList} from "./store/modules/channelStore";
 function App() {

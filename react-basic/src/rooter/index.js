@@ -1,41 +1,42 @@
-import Login from '../pages/Login'
-import Article from '../pages/Article'
-import Board from '../pages/Board'
-import About from '../pages/About'
-import Layout from '../pages/Layout'
-import NotFound from '../pages/NotFound'
-import { createBrowserRouter,createHashRouter} from 'react-router-dom'
-// 可以使用createHashRouter，#号后面的内容不会被发送到服务器
+import { createBrowserRouter, createHashRouter } from 'react-router-dom';
+import Login from '../pages/Login';
+import Article from '../pages/Article';
+import Board from '../pages/Board';
+import About from '../pages/About';
+import Layout from '../pages/Layout';
+import NotFound from '../pages/NotFound';
 
 const router = createBrowserRouter([
   {
-    path:'/',
+    path: '/',
     element: <Layout />,
-    children:[
+    children: [
       // 默认二级路由
       {
         // path:'/board',
-        index:true,
+        index: true,
         element: <Board />
       },
       {
-        path:'/about',
+        path: '/about',
         element: <About />
       }
     ]
   },
   {
-    path:'/login',
+    path: '/login',
     element: <Login />
   },
   {
-    path:'/article/:id/:name',
-    element: <Article />
+    path: '/article',
+    // path: '/article/:id/:name',
+    element: <Article />,
+    
   },
   {
-    path:'*',
+    path: '*',
     element: <NotFound />
   }
-])
+]);
 
-export default router
+export default router;

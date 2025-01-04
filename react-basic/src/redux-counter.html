@@ -21,6 +21,8 @@
     //     * action ： 管理数据的操作
     //     * 旧的state被垃圾回收
     //     ** /
+    
+    
     function reducer(state = {count:0},action){
             // 数据不可变，基于原始数据返回新的数据
             switch(action.type){
@@ -33,17 +35,19 @@
             }
         }
     // 2.使用reducer 生成store实例
+    
     const store = Redux.createStore(reducer)
     // 3.store实例的subscribe 方法订阅数据变化
+    
     store.subscribe(() => {
         const state = store.getState()
         // 5.通过store实例的getState方法更新视图
         document.getElementById('count').innerText = state.count
         console.log(state);
-        
     })
     // 4.通过store实例的dispatch方法分发action
     const inBtn = document.getElementById('increment')
+    
     inBtn.addEventListener('click',() => {
         // 增
         store.dispatch({type:'INCREMENT'})

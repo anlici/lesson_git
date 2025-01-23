@@ -1,20 +1,25 @@
 // axios 封装
 import axios from 'axios'
-// 
+import { getToken } from '@/utils'
 const request = axios.create({
     baseURL:'http://geek.itheima.net/v1_0',
     timeout:5000
 })
 // 请求拦截器
 // 发送请求前做拦截
-request.interceptors.request.use(config => {
-    // 拦截业务逻辑
-    // 进行请求配置的修改
-    console.log(config);
-    // 必须返回请求配置
+request.interceptors.request.use((config) => {
+    // 操作config，注入token
+    const token = getToken()
+    // 按照后端的要求，token需要注入到headers中
+    if(token) {
+        config.headers.Authorization = `Bearer ${token}`
+    }
     return config
-    
+    }, e => {
+        // 处理请求失败
+    return Promise.reject(e)
 })
+
 // 响应拦截器
 // 处理响应数据
 request.interceptors.response.use(response => {

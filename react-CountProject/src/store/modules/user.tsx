@@ -1,17 +1,20 @@
 // 用户状态
 import {createSlice} from '@reduxjs/toolkit';
-import request from '@/utils/request';
+import {request} from '@/utils';
+import { setToken as _setToken,getToken } from '@/utils';
 
 const userSlice =  createSlice({
     name:'user',
     // 数据状态
     initialState:{
-        token:localStorage.getItem('token_key') || '' // 后端string类型
+        // token:localStorage.getItem('token_key') || '' // 后端string类型
+        token:getToken() || ''
     },
     reducers:{
         setToken:(state,action)=>{
             state.token = action.payload // paload 载荷赋值给token
-            localStorage.setItem('token_key',action.payload)
+            //localStorage.setItem('token_key',action.payload)
+            _setToken(action.payload)
         },
         clearToken:(state)=>{
             state.token = ''
@@ -32,12 +35,11 @@ const fetchLogin = (loginForm:{ username: string; password: string }) => {
             const token = res.data.token
             // 3.保存token
             dispatch(setToken(token))
+            
         }catch (error) {
             console.log(error);
         }
     }
-   
-    
 }
 export {setToken,clearToken,fetchLogin}
 export default userReducer

@@ -1,7 +1,14 @@
 import { Button } from "antd-mobile"
 import { Outlet } from "react-router-dom"
+import { request } from "@/utils"
+import { useEffect } from "react"
 
 const Layout = () => {
+  useEffect(() => {
+    request.get("/user/profile").then((res:any) => {
+      console.log(res)
+    })
+  },[])
   return (
     <div>
       {/* 二级路由 */}

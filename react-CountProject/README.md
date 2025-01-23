@@ -27,3 +27,24 @@
             localStorage.setItem('token_key',action.payload)
         },
     }
+- token 封装存取删方法
+  多模块，共享复用
+- axios 请求拦截器注入token
+  多个接口以token 为依据，进行请求；
+  在axios 请求体注入token，自动携带
+- 使用token 进行路由权限控制
+  
+## 初始化样式
+- npm i normalize.css
+- html,
+  body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  #root {
+    height: 100%;
+  }
+
+## 高亮和跳转

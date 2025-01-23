@@ -1,0 +1,17 @@
+html, body {
+  width:100%;
+  margin: 0;
+  padding: 0;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background-image: url('@/assets/background.jpg'); // 替换为您的背景图片路径
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}

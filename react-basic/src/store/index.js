@@ -5,7 +5,6 @@ const store = configureStore({
     reducer: {
         counter: counterReducer,
         channel: channelReducer,
-    
     }
 })
 export default store;

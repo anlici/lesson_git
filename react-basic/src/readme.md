@@ -1,5 +1,3 @@
-## 
-
 # useDispatch
     修改store 里面数据，hook函数useDispatch 生成提交对象的dispatch 函数，useSelector 生成获取对象的函数
 

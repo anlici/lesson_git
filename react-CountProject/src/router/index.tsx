@@ -3,6 +3,8 @@ import Layout from '@/pages/Layout'
 import Article from '@/pages/Article'
 import Home from '@/pages/Home'
 import Login  from '@/pages/Login'
+import NotFound from '@/pages/NotFound'
+
 import { AuthRoute } from '@/components/AuthRoute'
 // 导入定制主题文件
 import '@/theme.css'
@@ -18,6 +20,10 @@ const roots = createBrowserRouter([
     {
         path: "/login",
         element: <Login />,
+    },
+    {
+        path:'*',
+        element:<NotFound />
     }
 ])
 

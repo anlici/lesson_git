@@ -5,10 +5,12 @@ import {
     Card
   } from 'antd'
 import './index.scss'
-
+import { useDispatch } from 'react-redux'
+import { fetchLogin  } from '@/store/modules/user'
   const Login = () => {
+    const dispatch = useDispatch()
     const onFinish = (values: any) => {
-      console.log('Received values of form: ', values)
+      dispatch(fetchLogin(values))
     }
     return (
       <div className='login-container'>

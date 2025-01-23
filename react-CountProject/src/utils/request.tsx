@@ -24,4 +24,5 @@ request.interceptors.response.use(response => {
     // 处理响应失败
     return Promise.reject(e)
 })
+
 export default request

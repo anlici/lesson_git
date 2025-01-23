@@ -2,15 +2,24 @@ import {
     Button,
     Form,
     Input,
-    Card
+    Card,
+    message
   } from 'antd'
 import './index.scss'
 import { useDispatch } from 'react-redux'
 import { fetchLogin  } from '@/store/modules/user'
-  const Login = () => {
+import { useNavigate } from 'react-router-dom'
+
+const Login = () => {
     const dispatch = useDispatch()
-    const onFinish = (values: any) => {
-      dispatch(fetchLogin(values))
+    const navigate = useNavigate()
+
+    const onFinish = async (values: any) => {
+      await dispatch(fetchLogin(values))
+      // 跳转页面
+      navigate('/')
+      // 提示
+      message.success('登录成功')
     }
     return (
       <div className='login-container'>

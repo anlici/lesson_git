@@ -1,16 +1,17 @@
 // 用户状态
 import {createSlice} from '@reduxjs/toolkit';
-import { request } from '@/utils/request';
+import request from '@/utils/request';
 
 const userSlice =  createSlice({
     name:'user',
     // 数据状态
     initialState:{
-        token:'' // 后端string类型
+        token:localStorage.getItem('token_key') || '' // 后端string类型
     },
     reducers:{
         setToken:(state,action)=>{
             state.token = action.payload // paload 载荷赋值给token
+            localStorage.setItem('token_key',action.payload)
         },
         clearToken:(state)=>{
             state.token = ''

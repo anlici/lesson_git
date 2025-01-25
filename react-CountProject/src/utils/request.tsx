@@ -1,6 +1,7 @@
 // axios 封装
 import axios from 'axios'
 import { getToken } from '@/utils'
+import { removeToken } from '@/utils/token'
 const request = axios.create({
     baseURL:'http://geek.itheima.net/v1_0',
     timeout:5000
@@ -26,7 +27,13 @@ request.interceptors.response.use(response => {
     // 返回的响应不再需要从data属性当中拿数据，而是响应就是我们要的数据
     return response.data
 }, e => {
-    // 处理响应失败
+   // 401 token失效
+   if (e.response.status === 401) {
+    removeToken() // 清除token
+    // 跳转到登录页面
+    location.href = '/login'
+    // window.location.reload() // 刷新页面
+   }
     return Promise.reject(e)
 })
 

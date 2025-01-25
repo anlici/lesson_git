@@ -9,8 +9,13 @@ function getToken() {
 function clearToken() {
     localStorage.removeItem(TOKENKEY)
 }
+// 清除token
+function removeToken() {
+    localStorage.removeItem(TOKENKEY) 
+}
 export {
     setToken,
     getToken,
-    clearToken
+    clearToken,
+    removeToken
 }

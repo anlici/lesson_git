@@ -48,3 +48,22 @@
   }
 
 ## 高亮和跳转
+- 二级路由
+  onClick={onMenuClick} 点击,根据key 进行跳转
+  const onMenuClick = (route) => {
+    console.log('菜单被点击了', route)
+    const path = route.key
+    navigate(path)
+  }
+- 反向高亮
+  const location = useLocation() // 获取当前路径
+  console.log(location.pathname)
+  const selectedkey = location.pathname
+  再绑定到菜单上menu
+  selectedKeys={[selectedkey]}
+- 使用antd 菜单组件
+
+## 渲染用户信息
+- 安装：npm i react-redux @reduxjs/toolkit
+- redux 里面的reducers 对象，包含的方法，用于createSlice 创建动作对象，被store 调用，触发状态更新
+- 完成渲染，const name = useSelector(state => state.user.userInfo.name)

@@ -3,12 +3,14 @@ import {createSlice} from '@reduxjs/toolkit';
 import {request} from '@/utils';
 import { setToken as _setToken,getToken } from '@/utils';
 
+
 const userSlice =  createSlice({
     name:'user',
     // 数据状态
     initialState:{
         // token:localStorage.getItem('token_key') || '' // 后端string类型
-        token:getToken() || ''
+        token:getToken() || '',
+        userInfo:{}
     },
     reducers:{
         setToken:(state,action)=>{
@@ -16,15 +18,14 @@ const userSlice =  createSlice({
             //localStorage.setItem('token_key',action.payload)
             _setToken(action.payload)
         },
-        clearToken:(state)=>{
-            state.token = ''
+        // 获取个人信息
+        setUserInfo:(state,action)=>{ 
+            state.userInfo = action.payload 
         }
     }
 })
 // 解构出actionCreater
-const {setToken,clearToken} = userSlice.actions
-// 获取reducer
-const userReducer = userSlice.reducer
+const {setToken,setUserInfo} = userSlice.actions
 // 异步 完成获取token
 const fetchLogin = (loginForm:{ username: string; password: string }) => {
     return async (dispatch:any) => {
@@ -41,5 +42,22 @@ const fetchLogin = (loginForm:{ username: string; password: string }) => {
         }
     }
 }
-export {setToken,clearToken,fetchLogin}
+// 获取个人信息
+const fetchUserInfo = () => {
+    return async(dispatch:any) => {
+        try {
+           const res = request.get('/user/profile')
+           // 提交action
+           dispatch(setUserInfo(res.data))
+        }
+        catch (error) {
+            console.log(error); 
+        }
+    }
+}
+
+// 获取reducer
+const userReducer = userSlice.reducer
+
+export {setToken,fetchLogin,fetchUserInfo,setUserInfo}
 export default userReducer

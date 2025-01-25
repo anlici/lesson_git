@@ -1,17 +1,17 @@
-import { Layout, Menu, Popconfirm } from 'antd'
+import { Layout, Menu, Popconfirm } from 'antd';
 import {
   HomeOutlined,
   DiffOutlined,
   EditOutlined,
   LogoutOutlined,
-} from '@ant-design/icons'
-import './index.scss'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchUserInfo} from '@/store/modules/user'
+} from '@ant-design/icons';
+import './index.scss';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserInfo, clearUserInfo } from '@/store/modules/user';
 
-const { Header, Sider } = Layout
+const { Header, Sider } = Layout;
 
 const items = [
   {
@@ -29,36 +29,38 @@ const items = [
     key: '/publish',
     icon: <EditOutlined />,
   },
-]
+];
 
 const GeekLayout = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const onMenuClick = (route) => {
-    console.log('菜单被点击了', route)
-    const path = route.key
-    navigate(path)
-  }
+    console.log('菜单被点击了', route);
+    const path = route.key;
+    navigate(path);
+  };
 
   // 反向高亮
   // 1. 获取当前路由路径
-  const location = useLocation()
-  console.log(location.pathname)
-  const selectedkey = location.pathname
+  const location = useLocation();
+  console.log(location.pathname);
+  const selectedKey = location.pathname;
 
   // 触发个人用户信息action
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchUserInfo())
-  }, [dispatch])
+    dispatch(fetchUserInfo());
+  }, [dispatch]);
 
   // 退出登录确认回调
   const onConfirm = () => {
-    console.log('确认退出')
-    navigate('/login')
-  }
-// 从redux中获取用户信息
-  const name = useSelector(state => state.user.userInfo.name)
+    console.log('确认退出');
+    navigate('/login');
+    dispatch(clearUserInfo());
+  };
+
+  // 从redux中获取用户信息
+  const name = useSelector((state) => state.user.userInfo.name);
+
   return (
     <Layout>
       <Header className="header">
@@ -66,7 +68,13 @@ const GeekLayout = () => {
         <div className="user-info">
           <span className="user-name">{name}</span>
           <span className="user-logout">
-            <Popconfirm title="是否确认退出？" okText="退出" cancelText="取消" onConfirm={onConfirm}>
+            {/* 退出登录 */}
+            <Popconfirm
+              title="是否确认退出？"
+              okText="退出"
+              cancelText="取消"
+              onConfirm={onConfirm}
+            >
               <LogoutOutlined /> 退出
             </Popconfirm>
           </span>
@@ -77,11 +85,12 @@ const GeekLayout = () => {
           <Menu
             mode="inline"
             theme="dark"
-            selectedKeys={selectedkey}
+            selectedKeys={selectedKey}
             // 点击菜单的回调
             onClick={onMenuClick}
             items={items}
-            style={{ height: '100%', borderRight: 0 }}></Menu>
+            style={{ height: '100%', borderRight: 0 }}
+          ></Menu>
         </Sider>
         <Layout className="layout-content" style={{ padding: 20 }}>
           {/* 二级路由的出口 */}
@@ -89,6 +98,7 @@ const GeekLayout = () => {
         </Layout>
       </Layout>
     </Layout>
-  )
-}
-export default GeekLayout
+  );
+};
+
+export default GeekLayout;

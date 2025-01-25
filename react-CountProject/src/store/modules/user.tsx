@@ -2,6 +2,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {request} from '@/utils';
 import { setToken as _setToken,getToken } from '@/utils';
+import { removeToken } from '../../utils/token';
 
 
 const userSlice =  createSlice({
@@ -21,11 +22,16 @@ const userSlice =  createSlice({
         // 获取个人信息
         setUserInfo:(state,action)=>{ 
             state.userInfo = action.payload 
+        },
+        clearUserInfo:(state)=>{
+            state.token = ''
+            state.userInfo = {}
+            removeToken()
         }
     }
 })
 // 解构出actionCreater
-const {setToken,setUserInfo} = userSlice.actions
+const {setToken,setUserInfo,clearUserInfo} = userSlice.actions
 // 异步 完成获取token
 const fetchLogin = (loginForm:{ username: string; password: string }) => {
     return async (dispatch:any) => {
@@ -59,5 +65,5 @@ const fetchUserInfo = () => {
 // 获取reducer
 const userReducer = userSlice.reducer
 
-export {setToken,fetchLogin,fetchUserInfo,setUserInfo}
+export {setToken,fetchLogin,fetchUserInfo,setUserInfo,clearUserInfo}
 export default userReducer

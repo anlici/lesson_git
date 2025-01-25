@@ -67,3 +67,23 @@
 - 安装：npm i react-redux @reduxjs/toolkit
 - redux 里面的reducers 对象，包含的方法，用于createSlice 创建动作对象，被store 调用，触发状态更新
 - 完成渲染，const name = useSelector(state => state.user.userInfo.name)
+
+## 退出登录
+- 提示是否真退出
+  <Popconfirm
+    title="是否确认退出？"
+    okText="退出"
+    cancelText="取消"
+    onConfirm={onConfirm}>
+    <LogoutOutlined /> 退出
+  </Popconfirm>
+- 绑定onConfirm 事件，回到登录页
+  const onConfirm = async () => {
+    await dispatch(fetchLogout())
+    navigate('/login')
+  }
+- 清除token
+- @ react别名
+- cra 在webpack 中配置代理，采用插件 -craco 进行配置
+- npm i -D @craco/craco
+- 

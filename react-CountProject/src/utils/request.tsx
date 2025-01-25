@@ -32,7 +32,7 @@ request.interceptors.response.use(response => {
     removeToken() // 清除token
     // 跳转到登录页面
     location.href = '/login'
-    // window.location.reload() // 刷新页面
+    //window.location.reload() // 刷新页面
    }
     return Promise.reject(e)
 })

@@ -1,12 +1,11 @@
 {
   "files": [],
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
     },
     "types": ["antd"], // 声明antd的类型，不用手动引入
-    "noEmitOnError": false // 添加这一行来禁用发出
   },
   "include": ["src"],
   "references": [

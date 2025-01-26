@@ -43,6 +43,83 @@ outlet 组件 二级路由出口
 - 路由配置中最后配置
 - 左边notfound 右边*
 
-## react 两种路由模式
+- react 两种路由模式
 - hash
 - history
+
+## useReducer 是useState 整合状态的升级版
+- useReducer(reducer,0)
+  调用dispatch({type: 'add'} ) 触发reducer,更新新的state
+  function reducer (state,action) {
+  switch (action.type) {
+    case 'add':
+      return state + 1
+    case 'sub':
+      return state - 1
+    case 'addNum':
+      return state + action.payload // 原来state+payload值
+    default:
+      return state
+  }
+}
+- dispatch 派发动作,传入对象
+
+## useMemo
+- 对每次组件重新渲染时，计算的值进行缓存
+  useMemo(() => {
+    return result
+  },[result])
+  当result 发生变化时，重新计算result
+  当result 不发生变化时，直接使用缓存的result
+
+- react.memo 
+  允许comSon组件在props 没有变化时，不重新渲染
+  const comSon = memo(function Component(props) {
+    return <div>...</div>
+  })
+
+- react.memo-props 比较机制
+  新旧值进行比较
+  props 简单类型，直接比较
+  props 复杂，关心引用
+- 简单，虽然父组件重新渲染，但是子组件没有变化，不重新渲染
+  复杂，一定是新内容，子组件重新渲染
+  如何保证子组件不重新渲染？使用useMemo 缓存
+  const list = useMemo(() => {
+    return [1,2,3]
+  },[])
+
+- useCallback 缓存函数
+  当依赖项发生变化时，重新生成函数
+  当依赖项不发生变化时，使用缓存的函数
+  const hello = useCallback(() => {
+    return () => {
+      console.log('hello')
+    }
+  },[])
+
+- forwardRef 在父组件中获取子组件的dom
+  const sonRef = useRef()
+  const showRef = () => {
+    console.log(sonRef.current) 
+    sonRef.current.focus()
+  }
+  <ComSon ref={sonRef} />
+  ref.current 就是子组件的dom
+  子组件使用forwardRef 包裹
+  const ComSon = forwardRef((props,ref) => {
+    return <div ref={ref}>...</div>
+  })
+
+- 聚焦方法暴露给父组件
+  useImperativeHandle
+  focus: () => {
+        inputRef.current.focus()
+      }
+  useImperativeHandle(ref,() => {
+    return {
+      focus
+    }
+  })
+
+- 

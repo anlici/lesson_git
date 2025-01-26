@@ -6,7 +6,7 @@ import { Card, Breadcrumb, Form, Button, Radio, DatePicker, Select, Popconfirm }
 // 导入资源
 import { Table, Tag, Space } from 'antd'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
-import img404 from '@/assets/error.png'
+// import img404 from '@/assets/error.png'
 
 import { useChannel } from '@/hooks/useChannel'
 import { useEffect, useState } from 'react'

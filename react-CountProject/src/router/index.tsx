@@ -1,12 +1,11 @@
 // 路由配置
-
-import Layout from '@/pages/Layout' // src/pages/layout
-import Login from '@/pages/Login'
+import Layout from '../pages/Layout' // src/pages/layout
+import Login from '../pages/Login'
 
 import { createBrowserRouter } from 'react-router-dom'
-// import { AuthRoute } from '@/components/AuthRoute'
+import { AuthRoute } from '../components/AuthRoute'
 
-import Home from '@/pages/Home'
+import Home from '../pages/Home'
 import Article from '@/pages/Article'
 import Publish from '@/pages/Publish'
 import { Suspense, lazy } from 'react'
@@ -21,8 +20,8 @@ import { Suspense, lazy } from 'react'
 const router = createBrowserRouter([
   {
     path: "/",
-    // element: <AuthRoute> <Layout /></AuthRoute>,
-    element: <Layout />,
+    element: <AuthRoute> <Layout /></AuthRoute>,
+    
     children: [
       {
         index: true,

@@ -1,40 +1,52 @@
-// axios 封装
-import axios from 'axios'
-import { getToken } from '@/utils'
-import { removeToken } from '@/utils/token'
+// axios的封装处理
+import axios from "axios"
+import { getToken, removeToken } from "./token"
+import router from "../router"
+// 1. 根域名配置
+// 2. 超时时间
+// 3. 请求拦截器 / 响应拦截器
+
 const request = axios.create({
-    baseURL:'http://geek.itheima.net/v1_0',
-    timeout:5000
+  baseURL: 'http://geek.itheima.net/v1_0',
+  timeout: 5000
 })
-// 请求拦截器
-// 发送请求前做拦截
+
+// 添加请求拦截器
+// 在请求发送之前 做拦截 插入一些自定义的配置 [参数的处理]
 request.interceptors.request.use((config) => {
-    // 操作config，注入token
-    const token = getToken()
-    // 按照后端的要求，token需要注入到headers中
-    if(token) {
-        config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-    }, e => {
-        // 处理请求失败
-    return Promise.reject(e)
+  // 操作这个config 注入token数据
+  // 1. 获取到token
+  // 2. 按照后端的格式要求做token拼接
+  const token = getToken()
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+}, (error) => {
+  return Promise.reject(error)
 })
 
-// 响应拦截器
-// 处理响应数据
-request.interceptors.response.use(response => {
-    // 返回的响应不再需要从data属性当中拿数据，而是响应就是我们要的数据
-    return response.data
-}, e => {
-   // 401 token失效
-   if (e.response.status === 401) {
-    removeToken() // 清除token
-    // 跳转到登录页面
-    location.href = '/login'
-    //window.location.reload() // 刷新页面
-   }
-    return Promise.reject(e)
+// 添加响应拦截器
+// 在响应返回到客户端之前 做拦截 重点处理返回的数据
+request.interceptors.response.use((response) => {
+  // 2xx 范围内的状态码都会触发该函数。
+  // 对响应数据做点什么
+  return response.data
+}, (error) => {
+  // 超出 2xx 范围的状态码都会触发该函数。
+  // 对响应错误做点什么
+  // 监控401 token失效
+  console.dir(error)
+  if (error.response.status === 401) {
+    removeToken()
+    // 跳转到登录页
+    router.navigate('/login')
+    window.location.reload()
+  }
+  return Promise.reject(error)
 })
 
-export default request
+export { request }
+
+
+

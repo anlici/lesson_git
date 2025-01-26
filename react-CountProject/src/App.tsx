@@ -1,13 +1,10 @@
 
-
-
-function App() {
-  
-
+function App () {
+  const clickHandler = () => {
+    console.log('button按钮点击了')
+  }
   return (
-    <>
-      this hellp 
-    </>
+    <button onClick={clickHandler}></button>
   )
 }
 

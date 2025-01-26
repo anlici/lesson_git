@@ -86,4 +86,56 @@
 - @ react别名
 - cra 在webpack 中配置代理，采用插件 -craco 进行配置
 - npm i -D @craco/craco
-- 
+
+
+## 图表
+- echart 图表
+- 安装：npm i echarts
+- 引入：import * as echarts from 'echarts'
+- 渲染：
+  const option = {
+    title: {
+      text: 'ECharts 入门示例'
+    },
+    tooltip: {},
+  }
+  const myChart = echarts.init(document.getElementById('main'))
+- 封装，不同的使用props 进行适配
+  1. 获取渲染图表的dom节点
+  const chartDom = chartRef.current
+
+- 所有业务接口进行封装到api
+  axios 封装
+- 13800000002
+- 246810
+
+## 富文本编辑器
+- {/* value属性用户选中之后会自动收集起来作为接口的提交字段 */}
+  {channelList.map(item => <Option key={item.id} value={item.id}>{item.name}</Option>)}
+- 收集表单
+  使用form 组件收集，封装到hooks 中，按照接口处理表单数据
+- {/* 
+    listType: 决定选择文件框的外观样式
+    showUploadList: 控制显示上传列表
+  */}
+- upload 上传：action配置接口地址；
+  name 接口字段名
+  // 状态枚举
+  const status = {
+    1: <Tag color='warning'>待审核</Tag>,
+    2: <Tag color='success'>审核通过</Tag>,
+  }
+  {
+      title: '状态',
+      dataIndex: 'status',
+      // data - 后端返回的状态status 根据它做条件渲染
+      // data === 1 => 待审核
+      // data === 2 => 审核通过
+      render: data => status[data]
+    },
+    render 渲染,按照status
+
+- onFinish 
+- formValue.date[0].format('YYYY-MM-DD'),
+4. 重新拉取文章列表 + 渲染table逻辑重复的 - 复用
+    // reqData依赖项发生变化 重复执行副作用函数 

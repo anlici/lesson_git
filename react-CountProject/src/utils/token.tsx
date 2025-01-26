@@ -1,21 +1,21 @@
-// 封装token 
-const TOKENKEY = 'token_key' // 定义token的key
-function setToken(token: string) {
-    localStorage.setItem(TOKENKEY, token)
+// 封装基于ls存取删三个方法
+
+const TOKENKEY = 'token_key'
+
+function setToken (token: string) {
+  return localStorage.setItem(TOKENKEY, token)
 }
-function getToken() {
-    localStorage.getItem(TOKENKEY)
+
+function getToken () {
+  return localStorage.getItem(TOKENKEY)
 }
-function clearToken() {
-    localStorage.removeItem(TOKENKEY)
+
+function removeToken () {
+  return localStorage.removeItem(TOKENKEY)
 }
-// 清除token
-function removeToken() {
-    localStorage.removeItem(TOKENKEY) 
-}
+
 export {
-    setToken,
-    getToken,
-    clearToken,
-    removeToken
+  setToken,
+  getToken,
+  removeToken
 }

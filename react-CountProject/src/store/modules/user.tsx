@@ -1,69 +1,68 @@
-// 用户状态
-import {createSlice} from '@reduxjs/toolkit';
-import {request} from '@/utils';
-import { setToken as _setToken,getToken } from '@/utils';
-import { removeToken } from '../../utils/token';
+// 和用户相关的状态管理
 
+import { createSlice } from '@reduxjs/toolkit'
+import { setToken as _setToken, getToken, removeToken } from '@/utils'
+import { loginAPI, getProfileAPI } from '@/apis/user'
 
-const userSlice =  createSlice({
-    name:'user',
-    // 数据状态
-    initialState:{
-        // token:localStorage.getItem('token_key') || '' // 后端string类型
-        token:getToken() || '',
-        userInfo:{}
+const userStore = createSlice({
+  name: "user",
+  // 数据状态
+  initialState: {
+    token: getToken() || '',
+    userInfo: {}
+  },
+  // 同步修改方法
+  reducers: {
+    setToken (state, action) {
+      state.token = action.payload
+      _setToken(action.payload)
     },
-    reducers:{
-        setToken:(state,action)=>{
-            state.token = action.payload // paload 载荷赋值给token
-            //localStorage.setItem('token_key',action.payload)
-            _setToken(action.payload)
-        },
-        // 获取个人信息
-        setUserInfo:(state,action)=>{ 
-            state.userInfo = action.payload 
-        },
-        clearUserInfo:(state)=>{
-            state.token = ''
-            state.userInfo = {}
-            removeToken()
-        }
+    setUserInfo (state, action) {
+      state.userInfo = action.payload
+    },
+    clearUserInfo (state) {
+      state.token = ''
+      state.userInfo = {}
+      removeToken()
     }
+  }
 })
+
+
 // 解构出actionCreater
-const {setToken,setUserInfo,clearUserInfo} = userSlice.actions
-// 异步 完成获取token
-const fetchLogin = (loginForm:{ username: string; password: string }) => {
-    return async (dispatch:any) => {
-        try {
-            // 1.异步请求
-            const res = await request.post('/authorizations',loginForm)
-            // 2.同步aciton获取token
-            const token = res.data.token
-            // 3.保存token
-            dispatch(setToken(token))
-            
-        }catch (error) {
-            console.log(error);
-        }
+
+const { setToken, setUserInfo, clearUserInfo } = userStore.actions
+
+// 获取reducer函数
+
+const userReducer = userStore.reducer
+
+// 登录获取token异步方法封装
+const fetchLogin = (loginForm:any) => {
+  return  async(dispatch:any) => {
+    try{
+      const res = await loginAPI(loginForm)
+      console.log(res);
+      dispatch(setToken(res.data.token))
+    } catch (err) {
+      console.log(err)
     }
+  }
 }
-// 获取个人信息
+
+// 获取个人用户信息异步方法
 const fetchUserInfo = () => {
-    return async(dispatch:any) => {
-        try {
-           const res = request.get('/user/profile')
-           // 提交action
-           dispatch(setUserInfo(res.data))
-        }
-        catch (error) {
-            console.log(error); 
-        }
+  return async (dispatch:any) => {
+    try{
+      const res = await getProfileAPI()
+      console.log(res);
+      dispatch(setUserInfo(res.data))
+    }catch(err){
+      console.log(err)
     }
+  }
 }
 
-// 获取reducer
-const userReducer = userSlice.reducer
+export { fetchLogin, fetchUserInfo, clearUserInfo }
 
-export {setToken,fetchLogin,fetchUserInfo,setUserInfo,clearUserInfo}
 export default userReducer

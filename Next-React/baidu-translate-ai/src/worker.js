@@ -41,6 +41,7 @@ self.addEventListener('message', async (e) => {
         })
     }
    })
+   // output 为翻译后的文本
    self.postMessage({
     // text: 'ai任务完成'
     status:'completed',

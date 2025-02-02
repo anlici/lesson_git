@@ -1,136 +1,136 @@
-import { useRef,useEffect,useState } from 'react'
-import LanguageSelector from './LanguageSelector.jsx'
-import Progress from './conmmponents/Progress'
+import { useState,useRef,useEffect } from "react"
+import LanguageSelector from "./conmmponents/LanguageSelector"
+import './App.css' 
+import Progress from "./conmmponents/Progress"
 
-function App() {
-  // 源语言和目标语言
+const App = () => {
+  // useState 现在最牛逼的hook技术
+  // vue 借鉴了 react hooks 思想
+  // useReducer vue-router ，react 框架本身就内置了hook函数
+  // pinia api
   const [sourceLanguage,setSourceLanguage] = useState('eng_Latn')
   const [targetLanguage,setTargetLanguage] = useState('zho_Hans')
-  // llm 是否准备好
-  const [ready,setReady] = useState(false)
-  // 是否禁用按钮
-  const [disabled,setDisabled] = useState(true)
-  const [output,setOutput] = useState('')
-  // 进度条数组
-  const [progressItems,setProgressItems] = useState([])
   const [input,setInput] = useState('')
+  const [output,setOutput] = useState('')
+  const [disabled,setDisabled] = useState(false) 
+  // LLM准备好了吗？
+  const [ready,setReady] = useState(true)
 
-  // 响应式web worker对象
-  const worker = useRef(null) 
+  // 进度条数据数组 {filename:,percent:''}
+  const [progressItems,setProgressItems] = useState([])
+  // 
+  const worker = useRef(null)  //响应式web worker对象
   useEffect(() => {
-    if(!worker.current) {
+    // 局部 onMounted
+    // console.log('mounted');
+
+    if(!worker.current){
       worker.current = new Worker(
-        // import.meta.url 是一个特殊的URL，
-        // 它表示当前模块的URL,指向worker.js文件
-        // 并且设置type为module,表示该文件是一个ES模块
-        new URL('./worker.js',import.meta.url),
-        {type: 'module'}
+        new URL('./worker.js',import.meta.url),{
+          type:'module'
+        }
       )
+      console.log(worker.current);
+
+      worker.current.addEventListener('message',(e) => {
+        console.log(e,'------');
+        switch (e.data.status){
+          // LLM 依赖的多个文件触发 initiate 事件
+          case 'initiate':
+            setReady(false)
+            // 接收一个函数 
+            // 上一次的状态
+            setProgressItems((prev) => [...prev,e.data])
+            break;
+            case 'progress':
+              // console.log(e.data, '?????')
+              setProgressItems(
+                prev => prev.map(item => {
+                  if (item.file === e.data.file) {
+                    return {...item, progress: e.data.progress};
+                  } else {
+                    return item;
+                  }
+                })
+              )
+              break;
+              case 'done':
+                setProgressItems(prev => prev.filter(
+                  item => item.file!==e.data.file
+                ))
+                break
+              case 'ready':
+                setReady(true)
+                break
+              case 'update':
+                setOutput(e.data.output)
+                break
+              case 'completed':
+                setDisabled(false)
+                break
+        }
+      })
     }
-    //console.log(worker.current);
-    worker.current.addEventListener('message',(event) => {
-     // console.log(event.data);
-      switch(event.data.status) {
-        case 'initiate':
-          setReady(false)
-          // 接收上一次的进度
-          setProgressItems(prev => [...prev,e.data])
-          break;
-        case 'progress':
-          // 是否匹配到了当前的文件
-          setProgressItems(
-            prev => prev.map(item => {
-              if(item.file === event.data.file) {
-                return {...item,progress:event.data.progress};
-              }else {
-                return item
-              }
-            })
-          )
-          break;
-        case 'done':
-          // 过滤掉已经完成的文件
-          setProgressItems(
-            prev => prev.filter(
-              item => item.file !== event.data.file
-            )
-          )
-          break;
-        case 'ready':
-          // 准备就绪
-          setReady(true)
-          break;
-        case 'update':
-          // 更新输出
-          setOutput(event.data.output)
-          break;
-        case 'completed':
-          // 所有文件都已经完成，设置禁用状态为false
-          setDisabled(false)
-          break;
-        default:
-          break;
-      }
+    
+    return () => {
+      // onUnMounted
+      console.log('unmounted');
+      // worker.current = null
+    }
+  })
+  const translate = () => {
+    setDisabled(true)
+    // ai任务比较复杂，event loop 在这里就不灵了
+    // 前端游戏，加密，压缩，AI，交给多线程 Web Woker
+    // html5浏览器提供的多线程机制(纯计算类，不能做DOM，没有this)
+    worker.current.postMessage({
+      text:input,
+      src_lang:sourceLanguage,
+      tgt_lang:targetLanguage
     })
-  })
- const translate = () => {
-  setDisabled(true) // 禁用按钮
-  worker.current.postMessage({
-    text: input,
-    src_lang: sourceLanguage,
-    tgt_lang: targetLanguage,
-  })
-}
-  
-
-
+  }
   return (
     <>
-      <h1>transformer.js</h1>
+      <h1>Transformer.js</h1>
+      <p>来自HuggingFace 抱抱脸社区的NLP js库 ，完成常见的AI任务</p>
+      <p>未来端模型将大放异彩</p>
       <div className="container">
         <LanguageSelector 
           type="Source"
-          // 默认语言
           defaultLanguage={sourceLanguage}
-          // 下拉框改变时，改变sourceLanguage
           onChange={x => setSourceLanguage(x.target.value)}
         />
-        <LanguageSelector
+        <LanguageSelector 
           type="Target"
           defaultLanguage={targetLanguage}
           onChange={x => setTargetLanguage(x.target.value)}
         />
-        <div className="textbox-container">
-          <textarea
-            value={input}
-            rows={3}
-            onChange={x => setInput(x.target.value)}
-          />
-          <textarea
-            value={output}
-            rows={3}
-            readOnly
-          />
-        </div>
-        <button disabled={disabled} onClick={translate}>Translate</button>
-        <div className="progress-bar-container">
-          {
-            ready === false && (
-             <label>Loading...</label>
-            )
-          }
-          {
-            progressItems.map((data) => (
-              <div key={data.file} className="progress-item">
-                
-                <Progress text={data.file} progress={data.progress}/>
-              </div>
-            ))
-          }
-        </div>
-
-
-
+      </div>
+      <div className="textbox-container">
+        <textarea 
+          value={input}
+          rows={3}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <textarea
+          value={output}
+          role={3}
+          readOnly
+        ></textarea>
+      </div>
+      <button disabled={disabled} onClick={translate}>Translate</button>
+      {/* <Progress text="下载中" percentage={20}/> */}
+      <div className="progress-bar-container">
+        {
+          ready === false && (
+            <label>Loading models...</label>
+          )
+        }
+        {progressItems.map((data) => (
+          <div key={data.file}>
+            <Progress text={data.file} percentage={data.progress}/>
+          </div>
+        ))}
       </div>
     </>
   )

@@ -1,32 +1,45 @@
 {
-  "name": "tourtrace",
+  "name": "react-countproject",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "dev": "craco && vite",
+    "build": "craco -b && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "server": "json-server --watch server/data.json --port 5000",
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "dependencies": {
-    "axios": "^1.7.4",
-    "cropper": "^4.1.0",
-    "cropperjs": "^1.6.2",
-    "pinia": "^2.1.7",
-    "vant": "^4.9.3",
-    "vue": "^3.4.29",
-    "vue-router": "^4.3.3"
+    "@reduxjs/toolkit": "^2.5.0",
+    "antd": "^5.23.2",
+    "antd-mobile": "^5.38.1",
+    "axios": "^1.7.9",
+    "classname": "^0.0.0",
+    "dayjs": "^1.11.13",
+    "echarts": "^5.6.0",
+    "json-server": "^1.0.0-beta.3",
+    "normalize.css": "^8.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-quill": "^2.0.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.1.1",
+    "source-map-explorer": "^2.5.3"
   },
   "devDependencies": {
-    "@vant/auto-import-resolver": "^1.2.1",
-    "@vitejs/plugin-vue": "^5.0.5",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.5.1",
-    "tailwindcss": "^3.4.17",
-    "typescript": "^5.2.2",
-    "unplugin-auto-import": "^0.18.2",
-    "unplugin-vue-components": "^0.27.3",
-    "vite": "^5.4.14",
-    "vue-tsc": "^2.0.21"
+    "@craco/craco": "^7.1.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "sass-embedded": "^1.83.4",
+    "typescript": "^4.9.5",
+    "vite": "^5.3.1"
   }
 }
